@@ -53,27 +53,43 @@
     // Changing myImage src attribute, it will now display a different image when the page loads
     myImage.setAttribute('src', 'static/coffee_beans.jpg');
 
+    var drinksOrdered = [];
+
     // When this function is called the image src attribute will be set
-    function makeCoffee(evt) {
-        myImage.setAttribute('src', 'static/coffee_mug.jpg');
-        //console.log(evt);
-    }
+    // function makeCoffee(drinkType) {
+    //     drinksOrdered.push(drinkType);
+    //     myImage.setAttribute('src', 'static/coffee_mug.jpg');
+    //     setTimeout(function() {
+    //         myImage.setAttribute('src', 'static/coffee_beans.jpg')
+    //         }, 1500);
+    //     console.log(drinksOrdered)
+    // }
 
     // Displays coffee machine images for 500ms, then displays coffee beans image by mianipulating src attribute of myImage
-    function coffeeMachineToBeans(evt) {
+    function makeCoffee(drinkType) {
         myImage.setAttribute('src', 'static/coffee_machine.jpg');
-        setTimeout(makeCoffee, 1000); 
+        
+        //after displaying coffee machine image display the coffe mug
+        setTimeout(function() {
+            myImage.setAttribute('src', 'static/coffee_mug.jpg');
+        }, 1000); 
+        
         setTimeout(function() {
             myImage.setAttribute('src', 'static/coffee_beans.jpg')
-            }, 4500);
+        }, 4500);
+        
+        drinksOrdered.push(drinkType);
+        console.log(drinksOrdered);
+
     }
 
 
     //myImage.setAttribute('src', 'static/coffee_beans.jpg');
     // When the click event happens, the makeCoffee event handler will be called
-    myImage.addEventListener('click', coffeeMachineToBeans);
+    // myImage.addEventListener('click', makeCoffee);
+    myImage.addEventListener('click', function () { return makeCoffee('brew'); });
 
-
+    //When the image of coffee beans is clicked, the value "brew" is added to the drinksOrdered array
 
     // use this JavaScript object in further study step
 
@@ -83,6 +99,34 @@
         "latte": 4.15,
         "hot chocolate": 2.50
     };
+
+    var espresso = document.getElementById("espresso");
+    var latte = document.getElementById("latte");
+    var hotChocolate = document.getElementById("hot-chocolate");
+
+    espresso.addEventListener('click', function () { return makeCoffee('espresso'); });
+
+    latte.addEventListener('click', function () { return makeCoffee('latte'); });
+
+    hotChocolate.addEventListener('click', function () { return makeCoffee('hot chocolate'); });
+
+    function revenue(drinksOrdered) {
+        // Loop over the ordered drinks list
+
+        var drinkTotal = 0;
+
+        for (var i=0; i < drinksOrdered.length; i++) {
+        // For each drink in the drinks list, find the corresponding price in the prices list
+        // Add the price of the drink to the total cost of the drink order
+
+            drinkTotal += prices[drinksOrdered[i]];
+            console.log(prices[i]);
+        }
+
+        console.log(drinkTotal);
+        // Once all drinks have been looped over, return the total drink order
+        return drinkTotal;
+    }
 
 
 </script>
